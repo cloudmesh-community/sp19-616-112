@@ -1,0 +1,24 @@
+owner:
+  firstname: Shirish
+  lastname: Joshi
+  hid: sp19-616-112
+  community: i616
+  semester: sp19
+chapters:
+  - title: AWS Redshift
+    url: https://github.com/cloudmesh-community/book/blob/master/chapters/data/aws-redshift.md
+    description: The Cloud Data Warehouse from AWS   
+  - title: Infrastructure as Code
+    description:  IaC (infrastructure as code) 
+    url : https://github.com/cloudmesh-community/book/blob/master/chapters/devops/devops-iac.md    
+  - title: Terraform
+    description: The IaC (infrastructure as code) tool from HashiCorp
+    url : https://github.com/cloudmesh-community/book/blob/master/chapters/devops/terraform.md
+project:
+  - keyword: Redshift Database
+    title: Cloudmesh Interface to AWS Redshift
+    url: https://github.com/cloudmesh-community/sp19-616-112/blob/master/README-redshift.md
+    group: sp19-616-112
+    code: https://github.com/cloudmesh-community/sp19-616-112/blob/master/
+    pytest:
+      - TBD
