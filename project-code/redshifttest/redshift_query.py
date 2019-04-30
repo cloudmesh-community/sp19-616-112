@@ -5,15 +5,22 @@ import psycopg2
 import pprint
 
 
-configuration = { 'dbname': 'DB',
-                  'user':'User',
-                  'pwd':'Pass',
-                  'host':'Host',
+# configuration = { 'dbname': 'devdb',
+#                   'user':'awsuser',
+#                   'pwd':'AWSPass321',
+#                   'host':'cl1.crlmi1f9xwzi.us-east-1.redshift.amazonaws.com',
+#                   'port':'5439'
+#                 }
+
+
+configuration = { 'dbname': 'db',
+                  'user':'awsuser',
+                  'pwd':'AWSPass321',
+                  'host':'cl3.ced9iqbk50ks.us-west-2.redshift.amazonaws.com',
                   'port':'5439'
                 }
 
-
-
+# cl3.ced9iqbk50ks.us-west-2.redshift.amazonaws.com:5439
 
 def create_conn(*args,**kwargs):
 
@@ -34,7 +41,6 @@ def select(*args,**kwargs):
         cur.execute("""select tablename from pg_table_def""")
     except Exception as err:
             print(err.code,err)
-
 
     rows = cur.fetchall()
     for row in rows:
