@@ -17,9 +17,9 @@ chapters:
 project:
   - keyword: Redshift Database
     title: Cloudmesh Interface to AWS Redshift
-    url: https://github.com/cloudmesh-community/sp19-616-112/blob/master/README-redshift.md
+    url: https://github.com/cloudmesh/cloudmesh-redshift/blob/master/README.md
     group: sp19-616-112
-    code: https://github.com/cloudmesh-community/sp19-616-112/blob/master/
+    code: https://github.com/cloudmesh/cloudmesh-redshift
     status: 80%
     pytest:
       - TBD
