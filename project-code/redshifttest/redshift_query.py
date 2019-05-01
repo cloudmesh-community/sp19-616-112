@@ -13,10 +13,13 @@ import pprint
 #                 }
 
 
-configuration = { 'dbname': 'db',
+configuration = { 'dbname': 'db1',
                   'user':'awsuser',
                   'pwd':'AWSPass321',
-                  'host':'cl3.ced9iqbk50ks.us-west-2.redshift.amazonaws.com',
+                  #'host':'cl123.crlmi1f9xwzi.us-east-1.redshift.amazonaws.com',
+                  #'host':'cl321.crlmi1f9xwzi.us-east-1.redshift.amazonaws.com',
+                  # 'host':'cl456.crlmi1f9xwzi.us-east-1.redshift.amazonaws.com',
+                  'host':'cl123.crlmi1f9xwzi.us-east-1.redshift.amazonaws.com',
                   'port':'5439'
                 }
 
