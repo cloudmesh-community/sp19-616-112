@@ -20,6 +20,6 @@ project:
     url: https://github.com/cloudmesh/cloudmesh-redshift/blob/master/README.md
     group: sp19-616-112
     code: https://github.com/cloudmesh/cloudmesh-redshift
-    status: 80%
+    status: 100%
     pytest:
-      - TBD
+      - https://github.com/cloudmesh/cloudmesh-redshift/tree/master/tests
