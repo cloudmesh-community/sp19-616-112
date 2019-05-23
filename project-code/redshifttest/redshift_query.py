@@ -16,10 +16,7 @@ import pprint
 configuration = { 'dbname': 'db1',
                   'user':'awsuser',
                   'pwd':'AWSPass321',
-                  #'host':'cl123.crlmi1f9xwzi.us-east-1.redshift.amazonaws.com',
-                  #'host':'cl321.crlmi1f9xwzi.us-east-1.redshift.amazonaws.com',
-                  # 'host':'cl456.crlmi1f9xwzi.us-east-1.redshift.amazonaws.com',
-                  'host':'cl123.crlmi1f9xwzi.us-east-1.redshift.amazonaws.com',
+                  'host':'cl6.ced9iqbk50ks.us-west-2.redshift.amazonaws.com',
                   'port':'5439'
                 }
 
@@ -48,6 +45,60 @@ def select(*args,**kwargs):
     rows = cur.fetchall()
     for row in rows:
         print(row)
+
+
+def sql_in_file(*args,**kwargs):
+    fd = open(kwargs['filename'], 'r')
+    sql_file = fd.read()
+    fd.close()
+
+    # all SQL statements (split on ';')
+    sql_stmts = sql_file.split(';')
+
+    cur = kwargs['cur']
+
+    currentconn = kwargs['conn']
+
+    for stmt in sql_stmts:
+        # This will skip and report errors
+        # For example, if the tables do not yet exist, this will skip over
+        # the DROP TABLE commands
+        if stmt is None or len(stmt.strip()) == 0:
+            continue
+        try:
+            cur.execute(stmt)
+        except psycopg2.InterfaceError as err:
+            print("error in interface:", err)
+            currentconn.rollback()
+            continue
+        except psycopg2.DatabaseError as err:
+            print("error related to DB:", err)
+            currentconn.rollback()
+            continue
+        except psycopg2.DataError as err:
+            print("error in data:", err)
+            currentconn.rollback()
+            continue
+        except psycopg2.OperationalError as err:
+            print("error related to db operation:", err)
+            currentconn.rollback()
+            continue
+        except psycopg2.IntegrityError as err:
+            print("error in data integrity:", err)
+            currentconn.rollback()
+            continue
+        except psycopg2.InternalError as err:
+            print("error: internal, usually type of DB Error:", err)
+            currentconn.rollback()
+            continue
+        except psycopg2.ProgrammingError as err:
+            print("error in Programming:", err)
+            currentconn.rollback()
+            continue
+        except psycopg2.NotSupportedError as err:
+            print("error - not supported feature/operation: ", err)
+            currentconn.rollback()
+            continue
 
 
 def createemp(*args,**kwargs):
@@ -99,31 +150,38 @@ print('start')
 
 conn = create_conn(config=configuration)
 
-print('start select')
-cursor = conn.cursor()
-select(cur=cursor)
-cursor.close()
-print('finish select')
+# print('start select')
+# cursor = conn.cursor()
+# select(cur=cursor)
+# cursor.close()
+# print('finish select')
+#
+# print('start create')
+# cursor = conn.cursor()
+# createemp(cur=cursor)
+# cursor.close()
+# conn.commit()
+# print('finish create')
+#
+#
+# print('start insert')
+# cursor = conn.cursor()
+# insertemp(cur=cursor)
+# cursor.close()
+# conn.commit()
+# print('finish insert')
+#
+# print('start select emp')
+# cursor = conn.cursor()
+# selectemp(cur=cursor)
+# cursor.close()
+# print('finish select emp')
 
-print('start create')
+print('start ddl file')
 cursor = conn.cursor()
-createemp(cur=cursor)
+sql_in_file(filename = './redshiftddlfile.sql', cur=cursor, conn=conn)
 cursor.close()
 conn.commit()
-print('finish create')
-
-
-print('start insert')
-cursor = conn.cursor()
-insertemp(cur=cursor)
-cursor.close()
-conn.commit()
-print('finish insert')
-
-print('start select emp')
-cursor = conn.cursor()
-selectemp(cur=cursor)
-cursor.close()
-print('finish select emp')
+print('finish ddl file')
 
 conn.close()
